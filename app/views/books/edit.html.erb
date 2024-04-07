@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2>Editing Book</h2>
+<!--エラー表示-->
+        <% if @book.errors.any? %>
+          <div class="error-messages">
+            <%= pluralize(@book.errors.count, "error") %> error prohibited this obj from being saved:
+              <ul>
+                <% @book.errors.full_messages.each do |message| %>
+                 <li><%= message %></li>
+            <% end %>
+              </ul>
+         </div>
+        <% end %>
+<!--投稿入力-->
+<%= form_with model:@book do |f| %>
+<!--「form_with」は情報を送信するためのヘルパーメソッド。「|f|」(FormBuilder)は簡単にフォームを作成し、ユーザー入力を処理できる-->
+  <div class="title">
+    <label for="inputTitle">Title</label>
+      <%= f.text_field :title, autofocus: true, id:"inputName"%>
+      <!-- 「:name」`name`というパラメーターを持つ入力フィールドを生成-->
+      <!-- 「autofocus: true」`ユーザーがページを開いた瞬間に直接名前の入力ができる-->
+      <!-- 「id:"inputName"」`特定の要素を取得したり、スタイルを適用したりするための識別子として機能-->
+      <!--「placeholder:"名前"」初期　入力の際にデフォルトで入っている文章（プレースホルダーテキスト）を指定-->
+  </div>
+
+  <div class="opinion">
+    <label for="inputBody">Opinion</label>
+        <%= f.text_area :body, autofocus: true, id:"inputBody" %>
+       <!--「profile_image」生成されるフォームフィールドの名前を指定しています。この名前は、フォームの送信時にアップロードされたファイルをサーバーに送信するために使用-->
+  </div>
+        <%= f.submit "Update Book", class: "btn btn-success" %>
+<% end %>
+
+<%= link_to "Show", book_path(@book.id) %>
+  |
+<%= link_to "Back", books_path %>
+      </div>
+  </div>
+</div>

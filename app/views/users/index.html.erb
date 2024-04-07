@@ -1,0 +1,67 @@
+※ユーザーボタン(users index.htme)
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+<!--プロフィール-->
+   　  <h2>User info</h2>
+      <%= link_to user_path(current_user) do %>
+        <%= image_tag @user.get_profile_image(100,100) %>
+      <% end %>
+      <% if @user == current_user %>
+      <% end %>
+          <table class="table">
+            <tbody><tr></tr>
+              <tr>
+	              <th>name</th>
+	              <th><h3><%= @user.name %></h3></th>
+              </tr>
+              <tr>
+	              <th>introduction</th>
+	               <th><h3><%= @user.introduction %></h3></th>
+               </tr>
+             </tbody>
+           </table>
+        <div class="row">
+          <%= link_to edit_user_path(current_user.id), class: "btn btn-outline-secondary", method: :get do %>
+            <i class="fas fa-user-cog"></i>
+          <% end %>
+        </div>
+
+<!--投稿(共通)-->
+      <%= render 'users/list', book: @book %>
+     <!--@bookはbooksのコントローラで定義している-->
+     <!--book: @book レンダーの先の変数を定義する-->
+     <!--book：ローカル変数のためbookには何が入るか設定しなければいけないため　ローカル変数の変数には@book-->
+     <!--book.newでもOK-->
+    </div>
+<div class="col-md-8 offset-md-1">
+
+<!--ユーザー一覧-->
+<div class="col-md-8">
+  <h2>Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>name</th>
+          <th></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <% @users.each do |user| %>
+      <tbody>
+        <tr>
+          <td>
+<%= link_to user_path(user.id) do %>
+<!--(book.user-->
+<%= image_tag user.get_profile_image(100,100) %>
+<% end %>
+</td>
+<td><%= user.name %></td>
+<td><%= link_to "Show", user_path(user.id) %></td>
+<% end %>
+        </tr>
+      </tbody>
+     </table>
+  </div>
+

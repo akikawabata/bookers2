@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2>User info</h2>
+<!--エラー表示-->
+        <% if @user.errors.any? %>
+          <div class="error-messages">
+            <%= pluralize(@user.errors.count, "error") %> error prohibited this obj from being saved:
+              <ul>
+            <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+              </ul>
+          </div>
+        <% end %>
+<!--プロフィール入力-->
+<%= form_with model:@user do |f| %>
+<!--「form_with」は情報を送信するためのヘルパーメソッド。「|f|」(FormBuilder)は簡単にフォームを作成し、ユーザー入力を処理できる-->
+  <label for="inputName">Name</label>
+    <%= f.text_field :name, autofocus: true, id:"inputName"%>
+　　<!-- 「:name」`name`というパラメーターを持つ入力フィールドを生成-->
+　　<!-- 「autofocus: true」`ユーザーがページを開いた瞬間に直接名前の入力ができる-->
+　　<!-- 「id:"inputName"」`特定の要素を取得したり、スタイルを適用したりするための識別子として機能-->
+　　<!--「placeholder:"名前"」初期　入力の際にデフォルトで入っている文章（プレースホルダーテキスト）を指定-->
+      <div class="image">
+        <label for="inputImage">Image</label>
+          <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
+      </div>
+
+      <div class="introduction">
+        <label for="inputIntroduction">Introduction</label>
+          <%= f.text_area :introduction, autofocus: true, id:"inputIntroduction" %>
+      </div>
+     <!--「profile_image」生成されるフォームフィールドの名前を指定しています。この名前は、フォームの送信時にアップロードされたファイルをサーバーに送信するために使用-->
+     <%= f.submit "Update User", class: "btn btn-secondary" %>
+<% end %>
+    </div>
+  </div>
+</div>
